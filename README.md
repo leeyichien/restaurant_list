@@ -15,15 +15,15 @@
 
 你可以開啟專案[localhost:3000](http://localhost:3000)
 
-#畫面
+# 畫面
 
-##首頁-瀏覽所有的餐廳
+## 首頁-瀏覽所有的餐廳
 ![index](public/images/index.png)
 
-##搜尋功能
+## 搜尋功能
 ![search](public/images/search.png)
 
-##餐廳內容資訊頁面
+## 餐廳內容資訊頁面
 ![show](public/images/show.png)
 
 
