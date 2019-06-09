@@ -17,3 +17,14 @@
 
 #畫面
 
+##首頁-瀏覽所有的餐廳
+![index](public/images/index.png)
+
+##搜尋功能
+![search](public/images/search.png)
+
+##餐廳內容資訊頁面
+![show](public/images/show.png)
+
+
+
