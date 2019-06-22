@@ -44,13 +44,10 @@ app.use(express.static('public'))
 // 設定路由
 // 首頁
 app.get('/', (req, res) => {
-  //res.render('index', { restaurants: restaurantList.results })
-
-  Restaurant.find((err, restaurants) => {                                 // 把 Restaurant model 所有的資料都抓回來
+  Restaurant.find((err, restaurants) => {                // 把 Restaurant model 所有的資料都抓回來
     if (err) return console.error(err)
     return res.render('index', { restaurants: restaurants })  // 將資料傳給 index 樣板
   })
-
 })
 
 // 列出全部
@@ -65,13 +62,15 @@ app.get('/restaurants/new', (req, res) => {
 
 // 顯示一筆 Restaurant 的詳細內容
 app.get('/restaurants/:id', (req, res) => {
-  res.send('顯示 Restaurant 的詳細內容')
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    return res.render('detail', { restaurant: restaurant })
+  })
 })
 
 // 新增一筆 Restaurant
-app.post('/reataurants', (req, res) => {
-  const restaurant = new Restaruant({
-    id: req.body.id,
+app.post('/restaurants', (req, res) => {
+  const restaurant = new Restaurant({
     name: req.body.name,
     name_en: req.body.name_en,
     category: req.body.category,
@@ -81,7 +80,6 @@ app.post('/reataurants', (req, res) => {
     google_map: req.body.google_map,
     rating: req.body.rating,
     description: req.body.description,
-    // 是從 new 頁面 form 傳過來
   })
 
   restaurant.save(err => {
@@ -93,23 +91,41 @@ app.post('/reataurants', (req, res) => {
 
 // 修改 Restaurant 頁面
 app.get('/restaurants/:id/edit', (req, res) => {
-  res.send('修改Restaurant 頁面')
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    return res.render('edit', { restaurant: restaurant })
+  })
 })
 
 // 修改 Restaurant
 app.post('/restaurants/:id', (req, res) => {
-  res.send('修改Restaurant')
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    restaurant.name = req.body.name
+    restaurant.name_ec = req.body.name_ec
+    restaurant.category = req.body.category
+    restaurant.image = req.body.image
+    restaurant.location = req.body.location
+    restaurant.phone = req.body.phone
+    restaurant.google_map = req.body.google_map
+    restaurant.rating = req.body.rating
+    restaurant.description = req.body.description
+    restaurant.save(err => {
+      if (err) return console.error(err)
+      return res.redirect(`/restaurants/${req.params.id}`)
+    })
+  })
 })
 
 // 刪除 Restaurant
 app.post('/restaurants/:id/delete', (req, res) => {
-  res.send('刪除Restaurant')
-})
-
-
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    restaurant.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
 })
 
 app.get('/search', (req, res) => {
