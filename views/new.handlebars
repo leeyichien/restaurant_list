@@ -1,13 +1,44 @@
 <!-- ./views/new.handlebars -->
-<form action="/restaurants" method="POST">
-  <input type="text" placeholder="name" name="name">
-  <input type="text" placeholder="name_en" name="name_en">
-  <input type="text" placeholder="category" name="category">
-  <input type="text" placeholder="image" name="image">
-  <input type="text" placeholder="location" name="location">
-  <input type="text" placeholder="phone" name="phone">
-  <input type="text" placeholder="google_map" name="google_map">
-  <input type="text" placeholder="rating" name="rating">
-  <input type="text" placeholder="description" name="description">
-  <button type="submit">Create</button>
-</form>
+<div class="container">
+  <form action="/restaurants" method="POST">
+    <div class="form-group row">
+      <label for="formControlRange">名稱</label>
+      <input type="text" placeholder="" name="name">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">英文名稱</label>
+      <input type="text" placeholder="" name="name_en">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">類別</label>
+      <input type="text" placeholder="" name="category">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">照片連結</label>
+      <input type="text" placeholder="" name="image">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">地區</label>
+      <input type="text" placeholder="" name="location">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">電話</label>
+      <input type="text" placeholder="" name="phone">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">google map</label>
+      <input type="text" placeholder="" name="google_map">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">評比等級</label>
+      <input type="text" placeholder="" name="rating">
+    </div>
+    <div class="form-group row">
+      <label for="formControlRange">詳細介紹</label>
+      <textarea class="form-control" placeholder="" name="description" row="3"></textarea>
+    </div>
+    <div class="form-group row">
+      <button type="submit">Create</button>
+    </div>
+  </form>
+</div>
