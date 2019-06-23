@@ -1,8 +1,30 @@
 // require packages used in the project
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+// require express-handlebars here
+const exphbs = require('express-handlebars')
 const port = 3000
-const mongoose = require('mongoose')                    // 載入 mongoose
+// 引用 body-parser
+const bodyParser = require('body-parser');
+// 引用 method-override
+const methodOverride = require('method-override')
+
+// 載入 Restaurant model
+const Restaurant = require('./models/restaurant')
+
+// 設定 bodyParser
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// setting template engine
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+
+// 設定 method-override
+app.use(methodOverride('_method'))
+
+// 載入 mongoose
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
 
 // mongoose 連線後透過 mongoose.connection 拿到 Connection 的物件
@@ -18,28 +40,8 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-// 載入 Restaurant model
-const Restaurant = require('./models/restaurant')
-
-// 引用 body-parser
-const bodyParser = require('body-parser');
-
-// 設定 bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-// require express-handlebars here
-const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
-
-// setting template engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
-
-
 // setting static files
 app.use(express.static('public'))
-
 
 // 設定路由
 // 首頁
@@ -98,7 +100,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // 修改 Restaurant
-app.post('/restaurants/:id', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.name = req.body.name
@@ -118,7 +120,7 @@ app.post('/restaurants/:id', (req, res) => {
 })
 
 // 刪除 Restaurant
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id/delete', (req, res) => {
   Restaurant.findById(req.params.id, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.remove(err => {

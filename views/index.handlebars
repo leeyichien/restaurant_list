@@ -1,6 +1,4 @@
 <!-- search bar -->
-<a href="/restaurants/new">Create</a>
-
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
@@ -38,7 +36,7 @@
               </span>
               <a href="/restaurants/{{{this._id}}}/edit">edit</a>
               <a href="/restaurants/{{{this._id}}}">detail</a>
-              <form action="/restaurants/{{{this._id}}}/delete" method="POST" style="display: inline;">
+              <form action="/restaurants/{{{this._id}}}/delete?_method=DELETE" method="POST" style="display: inline;">
                 <button type="submit">delete</button>
               </form>
             </div>
